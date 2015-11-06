@@ -1,0 +1,21 @@
+# Site settings
+title: zhunjiee的博客
+motto: 简简单单每一天,做一只快乐的程序猿
+email: zhunjiee@qq.com
+description: > # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://zhunjiee.gitcafe.io" # the base hostname & protocol for your site
+weibo_username: zhunjiee
+github_username: 
+
+paginate: 8
+paginate_path: "page:num"
+
+
+# Build settings
+markdown: redcarpet
+redcarpet:
+    extensions: [ "fenced_code_blocks", "hard_wrap","autolink", "tables", "strikethrough", "superscript", "with_toc_data", "highlight", "prettify","no_intra_emphasis"]
