@@ -7,7 +7,7 @@
 
 - 联系方式: **zhunjiee@qq.com**
 
-- 感谢GitCafe提供平台
+- 感谢GitHub提供平台
 
 ##关于博主
 
