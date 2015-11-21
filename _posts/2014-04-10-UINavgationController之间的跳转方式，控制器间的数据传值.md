@@ -1,13 +1,56 @@
 ---
 layout: post
-title: "segue,UITabBarController,数据传值"
+title: "UINavgationController之间的跳转方式，控制器间的数据传值"
 date: 2014-04-10
 comments: false
 categories: UI
 ---
 
+##push/pop方式
 
-#segue
+- 使用push方法能将某个控制器压入栈,不显示的子控制器不会销毁
+
+```objc
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+```
+- 使用pop方法可以移除控制器,退回到前一个控制器
+- 将栈顶的控制器移除,会销毁子控制器
+
+```objc
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated;
+```
+- 回到指定的子控制器
+
+```objc
+- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated;
+```
+- 回到根控制器（栈底控制器）
+
+```objc
+- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated;
+```
+##Modal方式
+除了push之外，还有另外一种控制器的切换方式，那就是Modal
+
+- 任何控制器都能通过Modal的形式展示出来
+
+- Modal的默认效果：新控制器从屏幕的最底部往上钻，直到盖住之前的控制器为止
+
+- 以Modal的形式展示控制器
+
+```objc
+- (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion
+```
+- 关闭当初Modal出来的控制器
+
+```objc
+- (void)dismissViewControllerAnimated: (BOOL)flag completion: (void (^)(void))completion;
+```
+
+- 如果一个控制器的view显示到屏幕上,这个控制器一定不能被销毁
+
+---
+##segue方式
 
 ###什么是segue
 - Storyboard上每一根用来界面跳转的线，都是一个UIStoryboardSegue对象（简称Segue）
@@ -81,7 +124,7 @@ categories: UI
 	- (2) **如果segue的style是`modal`**
         - 调用sourceViewController的`presentViewController`方法将`destinationViewController`展示出来
 
-#数据传值:
+#控制器间的数据传值
 - 数据从(**传递方**)传递给(**接收方**)
 
 注意:
@@ -176,9 +219,6 @@ categories: UI
 
 
 
-
-
-
 // 点击添加按钮的时候调用
 - (IBAction)addContact:(id)sender {
     
@@ -196,85 +236,3 @@ categories: UI
 
 ```
 
----
-
-#UITabBarController
-
----
-
-- UITabBarController(49)的使用步骤
-    - 初始化UITabBarController
-    - 设置UIWindow的rootViewController为UITabBarController
-    - 根据具体情况，通过addChildViewController方法添加对应个数的子控制器
-
-```objc
-// 启动完成的时候调用
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
-    // 1.创建窗口
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-
-    // 2.设置窗口的根控制器
-    // 2.1创建UITabBarController的根控制器
-    UITabBarController *tab = [[UITabBarController alloc] init];
-    // 2.2.设置根控制器
-    self.window.rootViewController = tab;
-
-    // 3.创建子控制器
-    UIViewController *vc = [[UIViewController alloc] init];
-
-    vc.view.backgroundColor = [UIColor redColor];
-    vc.tabBarItem.title = @"消息";
-    vc.tabBarItem.image = [UIImage imageNamed:@"tab_recent_nor"];
-
-    // 3.1添加子控制器
-    [tab addChildViewController:vc];
-
-
-
-    // 4.显示窗口
-    [self.window makeKeyAndVisible];
-
-
-    return YES;
-}
-```
-
-###UITabBarController的子控制器
-UITabBarController添加控制器的方式有2种
-- 添加单个子控制器
-
-```objc
-- (void)addChildViewController:(UIViewController *)childController;
-// UITabBarController默认显示第0个控制器的view
-```
-- 设置子控制器数组
-
-```objc
-@property(nonatomic,copy) NSArray *viewControllers;
-```
-
-###UITabBarButton
-- UITabBarButton里面显示什么内容，由对应子控制器的tabBarItem属性决定
-
-- UITabBarItem有以下属性影响着UITabBarButton的内容
-
-```objc
-- 标题文字
-@property(nonatomic,copy) NSString *title;
-
-- 图标
-@property(nonatomic,retain) UIImage *image;
-
-- 选中时的图标
-@property(nonatomic,retain) UIImage *selectedImage;
-
-- 提醒数字
-@property(nonatomic,copy) NSString *badgeValue;
-
-```
-
-
-#主流框架搭建
-- 先搭建UITabBarController,再添加导航控制器为UITabBarController的子控制器
-- Hide Bottom Bar On Push : 跳转时隐藏底部控制器,且只能隐藏系统的TabBar

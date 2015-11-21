@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "UIApplication,UIWindow,控制器view的创建及生命周期"
-date: 2014-04-07
+date: 2014-04-06
 comments: false
 categories: UI
 ---

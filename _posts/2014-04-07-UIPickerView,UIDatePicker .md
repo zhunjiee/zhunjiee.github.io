@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "UIPickerView,UIDatePicker"
-date: 2014-04-08
+date: 2014-04-07
 comments: false
 categories: UI
 ---

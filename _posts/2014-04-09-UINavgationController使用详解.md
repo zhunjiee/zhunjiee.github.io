@@ -152,6 +152,12 @@ self.automaticallyAdjustsScrollViewInsets = NO;
 
 - 因为导航控制器高度 20 + 44，其中20为statusBar的高度，44为导航控制器的真实高度，所以就是避免导航控制器盖住了ScrollView的内容
 
+- 禁止系统给第一个scrollView设置64的滚动区域
+
+```
+// 禁止系统给第一个scrollView设置64的滚动区域
+self.automaticallyAdjustsScrollViewInsets = NO;
+```
 
 ##修改返回按钮
 - 必须在父控件里修改子控件的返回按钮
@@ -172,29 +178,4 @@ self.navigationController.navigationBar.barTintColor = [UIColor orangeColor];
 
 ```
 ---
-
-#Modal
-除了push之外，还有另外一种控制器的切换方式，那就是Modal
-
-- 任何控制器都能通过Modal的形式展示出来
-
-- Modal的默认效果：新控制器从屏幕的最底部往上钻，直到盖住之前的控制器为止
-
-- 以Modal的形式展示控制器
-
-```objc
-- (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion
-```
-- 关闭当初Modal出来的控制器
-
-```objc
-- (void)dismissViewControllerAnimated: (BOOL)flag completion: (void (^)(void))completion;
-```
-
-- 如果一个控制器的view显示到屏幕上,这个控制器一定不能被销毁
-
-
-
----
-
 

@@ -21,8 +21,7 @@ InAppSettings为APP提供了Settings的快捷化构建，只需少量代码就�
 <pre>
 IASKAppSettingsViewController* vc = [[IASKAppSettingsViewController alloc] initWithNibName:@"IASKAppSettingsView" bundle:nil];
 UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
-[self presentViewController:navController animated:YES completion:^{
-    
+[self presentViewController:navController animated:YES completion:^{   
 }];
 </pre>
 

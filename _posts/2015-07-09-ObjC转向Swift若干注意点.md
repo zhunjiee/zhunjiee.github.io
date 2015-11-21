@@ -5,9 +5,9 @@ date: 2015-07-09
 comments: false
 categories: iOS
 ---
-* 不分头文件和实现文件，而是集合到.swift文件
+* Swift已不分头文件和实现文件，而是集合到.swift文件
 * 类型对象化（类似于java） Int、Float、Double、Bool、Character
-* let 定义常量； len pi = 3.14
+* let 定义常量； let pi = 3.14
 * var hello :NSString ?
 	* var 定义变量`var hello :NSString = @"1212"`
 	* : 指定变量类型
