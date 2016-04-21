@@ -117,7 +117,7 @@ static id _instance;
 @end
 ```
 
-###GCD实现单例模式 - 开发常用方式
+###GCD实现单例模式
 ```objc
 @implementation Singleton
 static id _instance;

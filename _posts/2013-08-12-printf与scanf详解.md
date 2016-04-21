@@ -3,7 +3,7 @@ layout: post
 title: "printf与scanf详解"
 date: 2013-08-12
 comments: false
-categories: 基础知识
+categories: C语言
 ---
 
 当初还是小白的我刚接触C语言,那时候什么都不懂,printf和scanf傻傻分不清楚

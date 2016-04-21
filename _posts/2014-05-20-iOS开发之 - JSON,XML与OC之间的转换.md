@@ -6,7 +6,15 @@ comments: false
 categories: 实用技术
 ---
 
-###JSON数据（NSData） -> OC对象（Foundation Object）
+##注意:
+对于比较复杂的json数据,拿到数据后可能不会在tableview上显示,一定记得刷新数据
+
+```objc
+// 注意:拿到数据之后一定要刷新表格
+[self.tableView reloadData];
+```
+---
+##JSON数据（NSData） -> OC对象（Foundation Object）
 - JSON和OC对象转换后对应数据类型
     + {} -> NSDictionary @{}
     + [] -> NSArray @[]
@@ -19,19 +27,14 @@ categories: 实用技术
 
 - 转换方法
 
-利用NSJSONSerialization类
-
 ```objc
 // 利用NSJSONSerialization类
 + (id)JSONObjectWithData:(NSData *)data options:(NSJSONReadingOptions)opt error:(NSError **)error;
 ```
-
 例:
-
 ```objc
 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
 ```
-
 - NSJSONReadingOptions
     - NSJSONReadingMutableContainers = (1UL << 0)
         - 创建出来的数组和字典就是可变
@@ -40,16 +43,14 @@ NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSON
     - NSJSONReadingAllowFragments
         - 允许解析出来的对象不是字典或者数组，比如直接是字符串或者NSNumber
 
-###OC对象（Foundation Object）-> JSON数据（NSData）
+## OC对象（Foundation Object）-> JSON数据（NSData）
 - 转换方法
 
 ```objc
 // 利用NSJSONSerialization类
 + (NSData *)dataWithJSONObject:(id)obj options:(NSJSONWritingOptions)opt error:(NSError **)error;
 ```
-
 例:
-
 ```objc
 NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
 ```
@@ -82,7 +83,16 @@ NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritin
 - 扩展性
     - 很容易给这个框架增加新框架
 
+## 利用苹果官方API播放视频
+```objc
+#import <MediaPlayer/MPMoviePlayerViewController.h>
 
+// 创建视频播放器
+MPMoviePlayerViewController *vc = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:urlStr]];
+
+// 显示视频
+[self presentViewController:vc animated:YES completion:nil];
+```
 ---
 ## XML的解析方式
 - SAX
