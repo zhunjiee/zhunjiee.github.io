@@ -1,0 +1,201 @@
+---
+layout: post
+title: "分类(Category),类扩展(Extension)"
+date: 2013-10-19
+comments: false
+categories: ObjC
+---
+
+##1.什么是Category
+- Category有很多种翻译: 分类 \ 类别 \ 类目 (一般叫分类)
+
+- Category是OC特有的语法, 其他语言没有的语法
+
+- Category的作用
+    + 可以在不修改原来类的基础上, 为这个类扩充一些方法
+    + 一个庞大的类可以分模块开发
+    + 一个庞大的类可以由多个人来编写,更有利于团队合作
+- Category的使用注意:
+    + 分类只能增加方法,不能增加成员变量
+    + 用@property只会生成变量的getter和setter方法的声明,不会实现
+    + 在分类方法的实现中可以访问原来类的成员变量
+    + 分类中可以重新实现原来类的方法,但是会覆盖原来的方法
+    + 方法的调用优先级:分类->原来的类->父类
+
+---
+
+##2.Category的格式
+- 在.h文件中声明类别
+    + 1)新添加的方法必须写在 @interface 与 @end之间
+    + 2)ClassName 现有类的类名(要为哪个类扩展方法)            + 3)CategoryName 待声明的类别名称
+    + 4)NewMethod 新添加的方法
+```
+@interface ClassName (CategoryName)
+NewMethod; //在类别中添加方法
+//不允许在类别中添加变量
+@end
+```
+    + >注意: 1)不允许在声明类别的时候定义变量
+
+- 在.m文件中实现类别:
+    + 1)新方法的实现必须写在@ implementation与@end之间
+    + 2)ClassName 现有类的类名
+    + 3)CategoryName 待声明的类别名称
+    + 4)NewMethod 新添加的方法的实现
+
+```
+@implementation ClassName(CategoryName)
+
+NewMethod
+... ...
+@end
+```
+
+---
+# Category注意事项
+
+---
+
+##1.分类的使用注意事项
+- 分类只能增加方法, 不能增加成员变量
+
+```
+@interface Person (WHY)
+{
+//    错误写法
+//    int _age;
+}
+- (void)eat;
+@end
+```
+
+- 分类中写property只会生成方法声明
+
+```
+@interface Person (WHY)
+// 只会生成getter/setter方法的声明, 不会生成实现和私有成员变量
+@property (nonatomic, assign) int age;
+@end
+```
+
+- 分类可以访问原来类中的成员变量
+
+```
+@interface Person : NSObject
+{
+    int _no;
+}
+@end
+
+@implementation Person (WHY)
+- (void)say
+{
+    NSLog(@"%s", __func__);
+    // 可以访问原有类中得成员变量
+    NSLog(@"no = %i", _no);
+}
+@end
+
+```
+
+- 如果分类和原来类出现同名的方法, 优先调用分类中的方法, 原来类中的方法会被忽略
+
+```
+@implementation Person
+
+- (void)sleep
+{
+    NSLog(@"%s", __func__);
+}
+@end
+
+@implementation Person (WHY)
+- (void)sleep
+{
+    NSLog(@"%s", __func__);
+}
+@end
+
+int main(int argc, const char * argv[]) {
+    Person *p = [[Person alloc] init];
+    [p sleep];
+    return 0;
+}
+
+输出结果:
+-[Person(WHY) sleep]
+
+```
+---
+
+##2.分类的编译的顺序
+- 多个分类中有同名方法,则执行最后编译的文件方法(注意开发中千万不要这么干)
+
+```
+@implementation Person
+
+- (void)sleep
+{
+    NSLog(@"%s", __func__);
+}
+@end
+
+@implementation Person (WHY)
+- (void)sleep
+{
+    NSLog(@"%s", __func__);
+}
+@end
+
+@implementation Person (MJ)
+- (void)sleep
+{
+    NSLog(@"%s", __func__);
+}
+@end
+
+int main(int argc, const char * argv[]) {
+    Person *p = [[Person alloc] init];
+    [p sleep];
+    return 0;
+}
+
+输出结果:
+-[Person(MJ) sleep]
+```
+
+![](http://7xj0kx.com1.z0.glb.clouddn.com/Snip20150625_10.png)
+
+
+- 方法调用的优先级(从高到低)
+    + 分类(最后参与编译的分类优先)
+    + 原来类
+    + 父类
+
+---
+# 类扩展(Class Extension)
+
+---
+
+##1.什么是类扩展
+- 延展类别又称为扩展(Extendsion)
+###Extension是Category的一个特例
+- 可以为某个类扩充一些私有的成员变量和方法
+    + 写在.m文件中
+    + 英文名是Class Extension
+
+---
+
+##2.类扩展书写格式
+
+```
+@interface 类名 ()
+
+@end
+
+```
+
+- > 对比分类, 就少了一个分类名称,因此也有人称它为”匿名分类”
+
+---
+

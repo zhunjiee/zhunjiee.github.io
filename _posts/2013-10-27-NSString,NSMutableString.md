@@ -28,10 +28,12 @@ NSURL *url = [NSURL URLWithString:@"http://www.baidu.com/zhunjiee"];
 NSURL *url = [NSURL fileURLWithPath:@"Users/zhunjiee/Desktop/zhunjiee.txt"];
 ```
 **从URL读取内容**
+
 ```objc
 NSString *str = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
 ```
 **写入URL**
+
 ```objc
 [str writeToURL:[NSURL URLWithString:@"/Users/why/Desktop/why.txt"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
 ```

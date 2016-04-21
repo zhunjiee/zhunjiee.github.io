@@ -3,7 +3,7 @@ layout: post
 title: "iOS中KVC、KVO、NSNotification、delegate 总结及区别"
 date: 2014-04-20
 comments: false
-categories: iOS
+categories: 知识囊
 ---                               
 
 ###1、KVC，即是指 NSKeyValueCoding，一个非正式的Protocol，提供一种机制来间接访问对象的属性。而不是通过调用Setter、Getter方法访问。KVO 就是基于 KVC 实现的关键技术之一。
